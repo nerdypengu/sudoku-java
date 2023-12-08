@@ -2,16 +2,16 @@ import javax.swing.*;
 import java.awt.*;
 
 public class Cell extends JTextField {
-    private static final long serialVersionUID = 1L;  // to prevent serial warning
+    private static final long serialVersionUID = 1L; // to prevent serial warning
 
     // Define named constants for JTextField's colors and fonts
-    //  to be chosen based on CellStatus
+    // to be chosen based on CellStatus
     public static final Color BG_GIVEN = new Color(0, 0, 0); // RGB
     public static final Color FG_GIVEN = Color.WHITE;
     public static final Color FG_NOT_GIVEN = Color.BLACK;
-    public static final Color BG_TO_GUESS  = Color.YELLOW;
+    public static final Color BG_TO_GUESS = Color.YELLOW;
     public static final Color BG_CORRECT_GUESS = new Color(0, 216, 0);
-    public static final Color BG_WRONG_GUESS   = new Color(216, 0, 0);
+    public static final Color BG_WRONG_GUESS = new Color(216, 0, 0);
     public static final Font FONT_NUMBERS = new Font("OCR A Extended", Font.PLAIN, 28);
 
     // Define properties (package-visible)
@@ -24,7 +24,7 @@ public class Cell extends JTextField {
 
     /** Constructor */
     public Cell(int row, int col) {
-        super();   // JTextField
+        super(); // JTextField
         this.row = row;
         this.col = col;
         // Inherited from JTextField: Beautify all the cells once for all
@@ -36,7 +36,7 @@ public class Cell extends JTextField {
     public void newGame(int number, boolean isGiven) {
         this.number = number;
         status = isGiven ? CellStatus.GIVEN : CellStatus.TO_GUESS;
-        paint();    // paint itself
+        paint(); // paint itself
     }
 
     /** This Cell (JTextField) paints itself based on its status */
@@ -53,17 +53,23 @@ public class Cell extends JTextField {
             super.setEditable(true);
             super.setBackground(BG_TO_GUESS);
             super.setForeground(FG_NOT_GIVEN);
-        } else if (status == CellStatus.CORRECT_GUESS) {  // from TO_GUESS
+        } else if (status == CellStatus.CORRECT_GUESS) { // from TO_GUESS
             super.setBackground(BG_CORRECT_GUESS);
-        } else if (status == CellStatus.WRONG_GUESS) {    // from TO_GUESS
+        } else if (status == CellStatus.WRONG_GUESS) { // from TO_GUESS
             super.setBackground(BG_WRONG_GUESS);
         }
     }
-    public int getNumber(){
+
+    public int getNumber() {
         return number;
     }
+
     public void setStatus(CellStatus status) {
         this.status = status;
+    }
+
+    public CellStatus getStatus() {
+        return status;
     }
 
     public int getRow() {
