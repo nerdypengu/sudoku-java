@@ -1,3 +1,10 @@
+/* KELOMPOK 10
+ * Eugenia Indrawan - 5026221020
+ * Ashila Mahdiyyah - 5026221148
+ * Razi Alvaro Arman - 5026221168
+ * 
+*/
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -12,21 +19,23 @@ public class Cell extends JTextField {
     public static final Color BG_TO_GUESS = Color.YELLOW;
     public static final Color BG_CORRECT_GUESS = new Color(0, 216, 0);
     public static final Color BG_WRONG_GUESS = new Color(216, 0, 0);
-    public static final Font FONT_NUMBERS = new Font("OCR A Extended", Font.PLAIN, 28);
+    public static final Font FONT_NUMBERS = new Font("Arial", Font.PLAIN, 25);
 
     // Define properties (package-visible)
     /** The row and column number [0-8] of this cell */
     int row, col;
     /** The puzzle number [1-9] for this cell */
     int number;
+    int value;
     /** The status of this cell defined in enum CellStatus */
     CellStatus status;
 
     /** Constructor */
-    public Cell(int row, int col) {
+    public Cell(int row, int col, int value) {
         super(); // JTextField
         this.row = row;
         this.col = col;
+        this.value = value;
         // Inherited from JTextField: Beautify all the cells once for all
         super.setHorizontalAlignment(JTextField.CENTER);
         super.setFont(FONT_NUMBERS);

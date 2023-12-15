@@ -1,3 +1,10 @@
+/* KELOMPOK 10
+ * Eugenia Indrawan - 5026221020
+ * Ashila Mahdiyyah - 5026221148
+ * Razi Alvaro Arman - 5026221168
+ * 
+*/
+
 import java.util.Random;
 
 public class SudokuGenerator {
@@ -90,7 +97,15 @@ public class SudokuGenerator {
     public static int[][] generate(int difficulty) {
         Random r = new Random();
 
-        int maxCount = 43;
+        int maxCount = 0;
+        if (difficulty == 1) {
+            maxCount = 35 + r.nextInt(6);
+        } else if (difficulty == 2) {
+            maxCount = 43 + r.nextInt(6);
+        } else if (difficulty == 3) {
+            maxCount = 57 + r.nextInt(6);
+        }
+
         // Reset the old puzzle.
         for (int i = 0; i < 9; i++) {
             for (int j = 0; j < 9; j++) {
@@ -124,14 +139,5 @@ public class SudokuGenerator {
             count += clearNum(s0, s1);
         }
         return board;
-    }
-
-    private static void printBoard(int[][] board) {
-        for (int[] row : board) {
-            for (int cell : row) {
-                System.out.print(cell + " ");
-            }
-            System.out.println();
-        }
     }
 }

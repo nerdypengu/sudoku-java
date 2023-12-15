@@ -1,9 +1,13 @@
+/* KELOMPOK 10
+ * Eugenia Indrawan - 5026221020
+ * Ashila Mahdiyyah - 5026221148
+ * Razi Alvaro Arman - 5026221168
+ * 
+*/
+
 public class Puzzle {
-    public int difficultyLevel = 1;
-    // All variables have package access
-    // The numbers on the puzzle
+    public int difficultyLevel;
     int[][] numbers = new int[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
-    // The clues - isGiven (no need to guess) or need to guess
     boolean[][] isGiven = new boolean[SudokuConstants.GRID_SIZE][SudokuConstants.GRID_SIZE];
 
     // Constructor
@@ -12,15 +16,11 @@ public class Puzzle {
 
     }
 
-    // Generate a new puzzle given the number of cells to be guessed, which can be
-    // used
-    // to control the difficulty level.
-    // This method shall set (or update) the arrays numbers and isGiven
-    public void newPuzzle() {
+    public void newPuzzle(int difficulty) {
+        difficultyLevel = difficulty;
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
         SudokuSolver solveit = new SudokuSolver();
         int[][] basis = sudokuGenerator.generate(difficultyLevel);
-        // Need to use input parameter cellsToGuess!
         boolean[][] hardcodedIsGiven = convertBoolean(basis);
         int[][] hardcodedNumbers = solveit.solve(basis);
 
@@ -31,7 +31,6 @@ public class Puzzle {
             }
         }
 
-        // Copy from hardcodedIsGiven into array "isGiven"
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
                 isGiven[row][col] = hardcodedIsGiven[row][col];
@@ -62,10 +61,6 @@ public class Puzzle {
             }
             System.out.println();
         }
-    }
-
-    public void setDiff(int i) {
-        difficultyLevel = i;
     }
 
 }

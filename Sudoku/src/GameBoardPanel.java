@@ -1,3 +1,10 @@
+/* KELOMPOK 10
+ * Eugenia Indrawan - 5026221020
+ * Ashila Mahdiyyah - 5026221148
+ * Razi Alvaro Arman - 5026221168
+ * 
+*/
+
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -5,13 +12,12 @@ import javax.swing.*;
 public class GameBoardPanel extends JPanel {
     private static final long serialVersionUID = 1L; // to prevent serial warning
     private SudokuMain sudokuMain;
+    public int difficulty;
 
     // Define named constants for UI sizes
     public static final int CELL_SIZE = 60; // Cell width/height in pixels
     public static final int BOARD_WIDTH = CELL_SIZE * SudokuConstants.GRID_SIZE;
     public static final int BOARD_HEIGHT = CELL_SIZE * SudokuConstants.GRID_SIZE;
-
-    // Board width/height in pixels
 
     // Define properties
 
@@ -22,12 +28,13 @@ public class GameBoardPanel extends JPanel {
     /** Constructor */
     public GameBoardPanel(SudokuMain sudokuMain) {
         this.sudokuMain = sudokuMain;
+
         super.setLayout(new GridLayout(SudokuConstants.GRID_SIZE, SudokuConstants.GRID_SIZE)); // JPanel
 
         // Allocate the 2D array of Cell, and added into JPanel.
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
-                cells[row][col] = new Cell(row, col);
+                cells[row][col] = new Cell(row, col, 0);
                 super.add(cells[row][col]); // JPanel
             }
         }
@@ -51,7 +58,13 @@ public class GameBoardPanel extends JPanel {
      */
     public void newGame() {
         // Generate a new puzzle
-        puzzle.newPuzzle();
+        puzzle.newPuzzle(difficulty);
+        // Reset elapsed time
+        sudokuMain.elapsedTime = 0;
+        sudokuMain.updateTimerLabel();
+
+        // Start the timer
+        sudokuMain.timer.start();
 
         // Initialize all the 9x9 cells, based on the puzzle.
         for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
@@ -74,6 +87,7 @@ public class GameBoardPanel extends JPanel {
                 }
             }
         }
+        sudokuMain.timer.stop();
         return true;
     }
 
@@ -106,6 +120,7 @@ public class GameBoardPanel extends JPanel {
             System.out.println("You entered " + numberIn);
             if (numberIn == sourceCell.getNumber()) {
                 sourceCell.setStatus(CellStatus.CORRECT_GUESS);
+                sourceCell.setEnabled(false);
                 sudokuMain.updateRemainingStatusLabel();
             } else {
                 sourceCell.setStatus(CellStatus.WRONG_GUESS);
@@ -115,5 +130,19 @@ public class GameBoardPanel extends JPanel {
                 JOptionPane.showMessageDialog(null, "Congratulations! You've solved the puzzle!");
             }
         }
+    }
+
+    public void setDiff(int i) {
+        difficulty = i;
+    }
+
+    public void SolveGame() {
+        for (int row = 0; row < SudokuConstants.GRID_SIZE; ++row) {
+            for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
+                cells[row][col].newGame(puzzle.numbers[row][col], true);
+                cells[row][col].setEnabled(false);
+            }
+        }
+        sudokuMain.timer.stop();
     }
 }
