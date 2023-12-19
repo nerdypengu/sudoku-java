@@ -15,7 +15,7 @@ public class GameBoardPanel extends JPanel {
     public int difficulty;
 
     // Define named constants for UI sizes
-    public static final int CELL_SIZE = 60; // Cell width/height in pixels
+    public static final int CELL_SIZE = 55; // Cell width/height in pixels
     public static final int BOARD_WIDTH = CELL_SIZE * SudokuConstants.GRID_SIZE;
     public static final int BOARD_HEIGHT = CELL_SIZE * SudokuConstants.GRID_SIZE;
 
@@ -105,6 +105,9 @@ public class GameBoardPanel extends JPanel {
                 }
             }
         }
+        if (isSolved()) {
+            remainingCells = 0;
+        }
 
         return remainingCells;
     }
@@ -141,8 +144,10 @@ public class GameBoardPanel extends JPanel {
             for (int col = 0; col < SudokuConstants.GRID_SIZE; ++col) {
                 cells[row][col].newGame(puzzle.numbers[row][col], true);
                 cells[row][col].setEnabled(false);
+                isSolved();
             }
         }
         sudokuMain.timer.stop();
+        sudokuMain.updateRemainingStatusLabel();
     }
 }
